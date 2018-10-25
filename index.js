@@ -69,8 +69,13 @@ const unifiedServer = (req, res) => {
 
 const handlers = {
     ping: (data, callback) => {
-        console.log(data);
+        console.log('pong.');
         callback(200);
+    },
+    hello: (data, callback) => {
+        callback(200, {
+            message: "welcome to the api!"
+        });
     },
     notFound: (data, callback) => {
         callback(404);
@@ -79,5 +84,6 @@ const handlers = {
 
 // Define the request router
 const router = {
-  ping : handlers.ping
+  ping : handlers.ping,
+  hello: handlers.hello,
 };

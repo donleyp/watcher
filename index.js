@@ -7,9 +7,10 @@
  */
 const http = require('http');
 const https = require('https');
-const config = require('./config');
 const fs = require('fs');
-const Server = require('./server');
+
+const config = require('./lib/config');
+const Server = require('./lib/server');
 
 // Create an instance of the server.
 const server = new Server();

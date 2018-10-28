@@ -1,0 +1,1002 @@
+{
+	"info": {
+		"_postman_id": "72c3025e-3fd9-41fa-a5f9-10b3c17306b4",
+		"name": "watcher",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "ping",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ac6d6649-be21-4343-911c-53fd47bab419",
+						"exec": [
+							"pm.test('response should be 200', () => {",
+							"    pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"",
+							"pm.test('response body should be empty object', () => {",
+							"    pm.expect(pm.response.text()).to.equal('{}');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://localhost:3001/ping",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"ping"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "hello",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b3d2f9a7-95a9-47cd-9663-ecffb6749864",
+						"exec": [
+							"pm.test('response should be 200', () => {",
+							"    pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://localhost:3001/hello",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"hello"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "error",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "71e4075d-a18b-4ef6-a8d5-669632d8d35f",
+						"exec": [
+							"pm.test(\"Status code is 500\", function () {",
+							"    pm.response.to.have.status(500);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://localhost:3001/error",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"error"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "not found",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a4a8a48e-5a65-4d2e-b877-99901156c51e",
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://localhost:3001/notathing",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"notathing"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "bad method",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d16c25c5-7dfe-4c03-b009-b5cb0926661f",
+						"exec": [
+							"pm.test('response should be 405', () => {",
+							"    pm.expect(pm.response.code).to.equal(405);",
+							"});",
+							"",
+							"pm.test('response body should be an error message.', () => {",
+							"    pm.expect(pm.response.text()).to.equal('{\"message\":\"method not supported.\"}');",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://localhost:3001/users",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get user without token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "03bb7497-5b6e-4223-8006-f4d3ef080664",
+						"exec": [
+							"pm.test(\"Status code is 403\", function () {",
+							"    pm.response.to.have.status(403);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"type": "text",
+						"value": "{{current_token}}",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://localhost:3001/users?phone=5551234567",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"users"
+					],
+					"query": [
+						{
+							"key": "phone",
+							"value": "5551234567"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "bad login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "622917f3-7dd7-45af-9c29-4265b6e7933f",
+						"exec": [
+							"pm.test('response should be 401', () => {",
+							"    pm.expect(pm.response.code).to.equal(401);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"phone\": \"5551234567\",\n\t\"password\": \"notThePassword\"\n}"
+				},
+				"url": {
+					"raw": "https://localhost:3001/tokens",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"tokens"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "bad username",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "622917f3-7dd7-45af-9c29-4265b6e7933f",
+						"exec": [
+							"pm.test('response should be 401', () => {",
+							"    pm.expect(pm.response.code).to.equal(401);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"phone\": \"5551234560\",\n\t\"password\": \"securePassword\"\n}"
+				},
+				"url": {
+					"raw": "https://localhost:3001/tokens",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"tokens"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "622917f3-7dd7-45af-9c29-4265b6e7933f",
+						"exec": [
+							"const token = pm.response.json().id;",
+							"if(token) {",
+							"    pm.globals.set(\"current_token\", pm.response.json().id);",
+							"}",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"phone\": \"5551234567\",\n\t\"password\": \"securePassword\"\n}"
+				},
+				"url": {
+					"raw": "https://localhost:3001/tokens",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"tokens"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "clean-up test user",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{current_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://localhost:3001/users?phone=5551234567",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"users"
+					],
+					"query": [
+						{
+							"key": "phone",
+							"value": "5551234567"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "622917f3-7dd7-45af-9c29-4265b6e7933f",
+						"exec": [
+							"pm.test('response should be 200', () => {",
+							"    pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"",
+							"pm.test('response body should be empty object', () => {",
+							"    pm.expect(pm.response.text()).to.equal('{}');",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"firstName\": \"Donley\",\n\t\"lastName\": \"P'Simer\",\n\t\"phone\": \"5551234567\",\n\t\"password\": \"securePassword\",\n\t\"tosAccepted\": true\n}"
+				},
+				"url": {
+					"raw": "https://localhost:3001/users",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login as new user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "622917f3-7dd7-45af-9c29-4265b6e7933f",
+						"exec": [
+							"pm.test('response should be 200', () => {",
+							"    pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"",
+							"",
+							"pm.globals.set(\"current_token\", pm.response.json().id);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"phone\": \"5551234567\",\n\t\"password\": \"securePassword\"\n}"
+				},
+				"url": {
+					"raw": "https://localhost:3001/tokens",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"tokens"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "03bb7497-5b6e-4223-8006-f4d3ef080664",
+						"exec": [
+							"pm.test(\"it should return the name and phone number.\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.firstName).to.eql(\"Donley\");",
+							"    pm.expect(jsonData.lastName).to.eql(\"P'Simer\");",
+							"    pm.expect(jsonData.phone).to.eql(\"5551234567\");",
+							"    pm.expect(jsonData.tosAccepted).to.eql(true);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{current_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://localhost:3001/users?phone=5551234567",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"users"
+					],
+					"query": [
+						{
+							"key": "phone",
+							"value": "5551234567"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "889e7651-1c57-4f2c-bd36-8840f3b55e58",
+						"exec": [
+							"pm.test(\"it should return the name and phone number.\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.firstName).to.eql(\"Dana\");",
+							"    pm.expect(jsonData.lastName).to.eql(\"P'Simer\");",
+							"    pm.expect(jsonData.phone).to.eql(\"5551234567\");",
+							"    pm.expect(jsonData.tosAccepted).to.eql(true);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "token",
+						"value": "{{current_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstName\": \"Dana\",\n    \"phone\": \"5551234567\"\n}"
+				},
+				"url": {
+					"raw": "https://localhost:3001/users",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get current token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7f05fa5c-ae8b-47a2-8c41-be90a791f62f",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{current_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://localhost:3001/tokens?id={{current_token}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"tokens"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{current_token}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create check",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d6a22184-5581-46ad-bc12-6f8f6eff67e0",
+						"exec": [
+							"const checkId = pm.response.json().id;",
+							"if (checkId) {",
+							"    pm.globals.set(\"current_check\", pm.response.json().id);",
+							"}",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{current_token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"protocol\": \"http\",\n\t\"url\": \"google.com\",\n\t\"method\": \"get\",\n\t\"successCodes\": [200, 201],\n\t\"timeoutSeconds\": 2.5\n}"
+				},
+				"url": {
+					"raw": "https://localhost:3001/checks",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"checks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update check",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d6a22184-5581-46ad-bc12-6f8f6eff67e0",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{current_token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": \"{{current_check}}\",\n\t\"protocol\": \"https\"\n}"
+				},
+				"url": {
+					"raw": "https://localhost:3001/checks",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"checks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get current check",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bdd8c29f-1448-4abc-a073-fb4aca1c1099",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{current_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://localhost:3001/checks?id={{current_check}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"checks"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{current_check}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete current check",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bdd8c29f-1448-4abc-a073-fb4aca1c1099",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "token",
+						"type": "text",
+						"value": "{{current_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://localhost:3001/checks?id={{current_check}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"checks"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{current_check}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "extend current token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "622917f3-7dd7-45af-9c29-4265b6e7933f",
+						"exec": [
+							"pm.test('response should be 200', () => {",
+							"    pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "token",
+						"value": "{{current_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": \"{{current_token}}\",\n\t\"extend\": true\n}"
+				},
+				"url": {
+					"raw": "https://localhost:3001/tokens",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"tokens"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete current token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7f05fa5c-ae8b-47a2-8c41-be90a791f62f",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{current_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://localhost:3001/tokens?id={{current_token}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"tokens"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{current_token}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete test user",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{current_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://localhost:3001/users?phone=5551234567",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"users"
+					],
+					"query": [
+						{
+							"key": "phone",
+							"value": "5551234567"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

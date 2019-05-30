@@ -1,3 +1,5 @@
 .https
 .data
+.log
 .vscode
+.twilio.json

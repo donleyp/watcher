@@ -5,29 +5,26 @@
  *  - reading/managing configuration.
  *  - gluing major components together.
  */
-const http = require('http');
-const https = require('https');
-const fs = require('fs');
-
-const config = require('./lib/config');
 const Server = require('./lib/server');
+const CheckWorker = require('./lib/check_worker.js');
+const LogWorker = require('./lib/log_worker');
 
-// Create an instance of the server.
-const server = new Server();
+class App {
+    static init() {
+        // Create an instance of the server.
+        const server = new Server();
+        server.init();
 
-const httpServer = http.createServer(server.getHandler());
+        // Worker is a static class, just call init():
+        const checkWorker = new CheckWorker();
+        checkWorker.loop().catch(console.log);
 
-httpServer.listen(config.httpPort, () => {
-    console.log("The http server is listening on port", config.httpPort);
-});
+        // Log Worker
+        const logWorker = new LogWorker();
+        logWorker.loop().catch(console.log);
+    }
+}
 
-// Loading up SSL certificates. This will fail if the files do not exist.
-const httpsServerOptions = {
-    'key': fs.readFileSync('./.https/key.pem'),
-    'cert': fs.readFileSync('./.https/cert.pem'),
-};
-const httpsServer = https.createServer(httpsServerOptions, server.getHandler());
+App.init();
 
-httpsServer.listen(config.httpsPort, () => {
-    console.log("The https server is listening on port", config.httpsPort);
-});
+module.export = { App };

@@ -17,6 +17,15 @@ OR on UNIX
 % source ./createcert.cmd
 ```
 
+You will also need a .twilio.json file. The format is as follows:
+```
+{
+    "accountSid": "<account sid>",
+    "authToken": "<auth token>",
+    "fromPhone": "+15555555555",
+    "testPhone": "+15555555555"
+}
+
 ## Running the Server
 ```
 node index.js
